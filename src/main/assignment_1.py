@@ -180,7 +180,7 @@ if __name__ == "__main__":
     #print(relative_error(precise_val, .259))
     
     # ====
-    # Quesion 6 answer
+    # Quesion 5 answer
     # ====
     
     ' section 1.3 '
