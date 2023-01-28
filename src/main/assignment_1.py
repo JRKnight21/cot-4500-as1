@@ -6,8 +6,8 @@ from decimal import Decimal
 # ===========
 
 binary_string = "010000000111111010111001"
-#exponent = "10000000111"
-#mantisa_portion ="111010111001"
+# exponent = "10000000111"
+# mantisa_portion ="111010111001"
 
 # The sign portion
 sign = 1 if binary_string[0] == '1' else 0
@@ -38,10 +38,10 @@ onehalf_to_mantisa_exp = [1*(1/2)**x for x in mantisa_exponents]
 
 #print(str(onehalf_rasied))
 
-#   f
+# f
 f = sum(onehalf_to_mantisa_exp)
 
-#   solution
+# solution
 decimal_value = ((-1)**sign) * (1 + f) * (2**exponent)
 
 decimal_format = format(decimal_value)
