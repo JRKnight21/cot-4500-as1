@@ -188,7 +188,7 @@ def bisection_method(left: float, right: float, given_function: str):
         # prints each iteration
         #print(mid_point)
     # prints the number of iterations
-    print(bisection_iteration_counter)
+    print(bisection_iteration_counter, end='\n\n')
 
 # part b newton raphson method
 
@@ -219,19 +219,19 @@ def newton_raphson(initial_approximation: float, tolerance: float, sequence: str
 
 if __name__ == "__main__":
     # Answer 1
-    print(solution_1)
+    print(solution_1_type_float, end='\n\n')
 
     # Answer 2
-    print(chopping_value)
+    print(chopping_value, end='\n\n')
 
     # Answer 3
-    print(rounding_value)
+    print(rounding_value, end='\n\n')
 
     # Answer 4
     # Absolute Error:
-    print(abs_error)
+    print(abs_error, sep='\n\n')
     # Relative Error:
-    print(str(f'{relative_err:.31f}'))
+    print(str(f'{relative_err:.31f}'), end='\n\n')
 
     # Answer 5
     function_a: str = "(-1**k) * (x**k) / (k**3)"
@@ -245,7 +245,7 @@ if __name__ == "__main__":
         # rounds up n
         round_up_n = np.ceil(n)
         # use function a and round up n = num
-        print(int(round_up_n))
+        print(int(round_up_n), end='\n\n')
 
     # Answer 6 (a) Bisection Method
     left = -4
@@ -258,4 +258,4 @@ if __name__ == "__main__":
     tolerance: float = .0001
     sequence: str = "x**3 + (4*(x**2)) - 10"
     iteration_counter = newton_raphson(initial_approximation, tolerance, sequence)
-    print(iteration_counter)
+    print(iteration_counter, end='\n\n')
