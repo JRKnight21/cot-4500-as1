@@ -218,6 +218,8 @@ def newton_raphson(initial_approximation: float, tolerance: float, sequence: str
     return iteration_counter
 
 if __name__ == "__main__":
+    # Answers to Assignment 1:
+    
     # Answer 1
     print(solution_1_type_float, end='\n\n')
 
@@ -259,3 +261,4 @@ if __name__ == "__main__":
     sequence: str = "x**3 + (4*(x**2)) - 10"
     iteration_counter = newton_raphson(initial_approximation, tolerance, sequence)
     print(iteration_counter, end='\n\n')
+    
