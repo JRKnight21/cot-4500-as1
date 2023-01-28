@@ -50,7 +50,6 @@ decimal_format = format(decimal_value)
 solution_1 = decimal_format
 #   prints solution with 5 decimal places
 print(solution_1)
-print()
 
 # ===========
 # Question 2
