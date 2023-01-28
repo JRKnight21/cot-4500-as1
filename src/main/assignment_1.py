@@ -45,7 +45,7 @@ f = sum(onehalf_to_mantisa_exp)
 #   solution
 decimal_value = ((-1)**sign) * (1 + f) * (2**exponent)
 
-decimal_format = format(decimal_value, '.5f')
+decimal_format = format(decimal_value)
 
 solution_1 = decimal_format
 #   prints solution with 5 decimal places
