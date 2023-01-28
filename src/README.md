@@ -1,6 +1,6 @@
 Joanna Romano
 
-Into to Python and GitHub
+Assignment 1
 
 The requirements.txt file includes the required packages to run the file
 and uses numpy version 1.24.1
@@ -23,7 +23,7 @@ The current Python version that is suggested to run this file is 3.11.1 64bit
 
 # How to run from command line option 2:
 1. Open a terminal window.
-2. Navigate to the solution cot-4500-intro > src > main > main.py
+2. Navigate to the solution cot-4500-as1 > src > main > main.py
 3. Run the command `python main.py` to execute the script.
 
 # How to run from VSCode
