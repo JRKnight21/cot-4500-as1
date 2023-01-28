@@ -82,6 +82,7 @@ chopping_value = float(chopping_normilized) * 10**decimal_index
 #print('chopping value:', chopping_value)
 
 #   converted it into an intiger since it's a whole number:
+print('Chopping normilized: ', chopping_normilized)
 print(int(chopping_value))
 
 # ===========
