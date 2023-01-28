@@ -1,22 +1,21 @@
 import numpy as np
+from decimal import Decimal
+
+# ===========
+# Question 1
+# ===========
 
 binary_string = "010000000111111010111001"
 #exponent = "10000000111"
 #mantisa_portion ="111010111001"
 
-# Extract the sign bit
+# The sign portion
 sign = 1 if binary_string[0] == '1' else 0
 
-# Extract the exponent bits
+# The exponent portion
 exponent_bits = binary_string[1:12]
 exponent = int(exponent_bits, 2) - 1023
 x =int(exponent_bits, 2)
-
-# Calculate the decimal value
-#decimal_value = ((-1)**sign) * (2**exponent)
-
-# Calculating the mantisa
-# Raised (1/2) to the indeces of the mantisa
 
 # mantisa string
 mantisa_string = binary_string[12:]
@@ -24,13 +23,13 @@ mantisa_string = binary_string[12:]
 mantisa_list = [i for i in mantisa_string]
 
 # A formula to find the indices of each 1
-def find_indices(list_to_check, item_to_find):
-    array = np.array(list_to_check)
-    indices = np.where(array == item_to_find)[0]
+def find_indices(checking_mantisa_list, finding_1s):
+    array = np.array(checking_mantisa_list)
+    indices = np.where(array == finding_1s)[0]
 #   added 1 becasue indices start at 0
     return list(indices+1)
 
-#   mantisa exponents
+# mantisa exponents
 mantisa_exponents = find_indices(mantisa_list, '1')
 #print(mantisa_exponents)
 
@@ -47,112 +46,95 @@ decimal_value = ((-1)**sign) * (1 + f) * (2**exponent)
 
 decimal_format = format(decimal_value)
 
+# Soltution 1
 solution_1 = decimal_format
-#   prints solution with 5 decimal places
-print(solution_1)
+#print(solution_1)
 
 # ===========
 # Question 2
 # ===========
 
-#   find the index of the decimal point
+# find the index of the decimal point
 decimal_index = solution_1.index(".")
 
-#   string to float for computation
+# string to float for computation
 solution_1_type_float = float(solution_1)
 
-#   output is 0.4915625
+# output is 0.4915625
 normalized_number = solution_1_type_float / (10**(decimal_index))
 
-#   string for chopping
+# string for chopping
 normalized_number = str(normalized_number)
 
-#   location of decimal
+# location of decimal
 normalized_index = normalized_number.index('.')
 #print('normalized index:', normalized_index)
+
 # k is 3 for k-digit floating point value
 k = 3
-#   index+1 becasue index starts at 0
+# index+1 becasue index starts at 0
 chopping_normilized = normalized_number[0: (normalized_index + 1) + k]
 #print('chopping normilized:', chopping_normilized)
 
-#   I used float in this case becasue with other values it could have decimals
-#   output is 461.0
+# I used float in this case becasue with other values it could have decimals
 chopping_value = float(chopping_normilized) * 10**decimal_index
 #print('chopping value:', chopping_value)
 
-#   converted it into an intiger since it's a whole number:
-print('Chopping normilized: ', chopping_normilized)
-print(int(chopping_value))
+# print('Chopping normilized: ', chopping_normilized)
+#print(chopping_value)
 
 # ===========
 # Question 3
 # ===========
 
-#solution_1_type_float = float(solution_1)
-#normalized_number = solution_1_type_float / (10**(decimal_index))
-#   I was really tempted to just use round()
+#   I was really tempted to use round()
 
-
+# custom rounding method 
 a = (normalized_index + 1) + k
 b = a + 1
 x = normalized_number
 x_string = str(x)
 place_holder = normalized_number[0: 6]
 
-
-# here
-
+# add's 5 to the number after the 3rd term
 rounding = float(place_holder) + 0.0005
-print('rounded: ',rounding)
+
 rounding_value = rounding * 10**decimal_index
-print('rounding value: ', rounding_value)
-
-# ===
-
-normalized_indices = normalized_number[0:]
-print('indeces: ', normalized_indices)
+#print(rounding_value)
 
 
+# ===========
+# Question 4
+# ===========
 
-print('placeholder: ', place_holder)
+# Preliminary before calculations
+rounding_value_decimal = Decimal(rounding_value)
+solution_1_decimal = Decimal(solution_1_type_float)
 
-print('normalized number: ', normalized_number)
-print('a: ', a)
+# Absolute Error:
+abs_error = abs(rounding_value_decimal - solution_1_decimal)
+#print(abs_error)
 
-
-def custom_round_python(number, decimal_places):
-    # Multiply the number by 10 raised to the power of the number of decimal places
-    number *= 10**decimal_places
-    # Check if the number needs to be rounded up or down
-    if number - int(number) >= 0.5:
-        number += 0.5
-    else:
-        number = int(number)
-    # Divide the number by 10 raised to the power of the number of decimal places
-    number /= 10**decimal_places
-    return number
-
-# Example usage
-rounded_number = custom_round_python(0.4915625, 3)
-print(rounded_number)
-
-#===
-#Question 6
-#===
+# Relative Error:
+relative_err = abs(rounding_value_decimal - solution_1_decimal) / abs(solution_1_decimal)
+#print(str(f'{relative_err:.31f}'))
 
 
+# ===========
+# Question 5
+# ===========
 
+# Check for alternating
 def check_for_alternating(function_we_got: str):
     term_check = check_for_negative_1_exponent_term(function_we_got)
     return term_check
+# Check for decreasing
 def check_for_decreasing(function_we_got: str, x: int):
     decreasing_check = True
     k = 1
     starting_val = abs(eval(function_we_got))
     for k in range(2, 100):
         result = abs(eval(function_we_got))
-        #print(result)
         if starting_val <= result:
             decreasing_check = False
     return decreasing_check
@@ -161,38 +143,119 @@ def check_for_negative_1_exponent_term(function: str) -> bool:
         return True
     return False
 
-# this par for question 4
-def absolute_error(precise:float, approximate: float):
-    sub_operation = precise - approximate
-    return abs(sub_operation)
-def relative_error(precise:float, approximate: float):
-    sub_operation = absolute_error(precise, approximate)
-    div_operation = sub_operation / precise
-    return div_operation
+
+# ===========
+# Question 6
+# ===========
+
+# part a
+def bisection_method(left: float, right: float, given_function: str):
+# checking if right and left function changes signs
+    x = left
+    intial_left = eval(given_function)
+    x = right
+    intial_right = eval(given_function)
+    if intial_left * intial_right >= 0:
+        print("Invalid inputs. Not on opposite sides of the function")
+        return
+    tolerance: float = 0.0001
+    diff: float = right - left
+
+
+    bisection_iteration_counter = 0
+    while (diff >= tolerance and bisection_iteration_counter <= 20):
+        bisection_iteration_counter += 1
+        # find function(midpoint)
+        mid_point = (left + right) / 2
+        x = mid_point
+        evaluated_midpoint = eval(given_function)
+        if evaluated_midpoint == 0.0:
+            break
+        
+        # find function(left)
+        x = left
+        evaluated_left_point = eval(given_function)
+        
+        # checks is orgin point has been crossed
+        first_conditional: bool = evaluated_left_point < 0 and evaluated_midpoint > 0
+        second_conditional: bool = evaluated_left_point > 0 and evaluated_midpoint < 0
+        if first_conditional or second_conditional:
+            right = mid_point
+        else:
+            left = mid_point
+        
+        diff = abs(right - left)
+        # prints each iteration
+        #print(mid_point)
+    # prints the number of iterations
+    print(bisection_iteration_counter)
+
+# part b newton raphson method
+
+# manual derivative
+def custom_derivative(value):
+    return (3 * value* value) + (8 * value)
+def newton_raphson(initial_approximation: float, tolerance: float, sequence: str):
+    iteration_counter = 0
+    # finds f
+    x = initial_approximation
+    f = eval(sequence)
+    # finds f' 
+    f_prime = custom_derivative(initial_approximation)
+    
+    approximation: float = f / f_prime
+    while(abs(approximation) >= tolerance):
+        # finds f
+        x = initial_approximation
+        f = eval(sequence)
+        # finds f' 
+        f_prime = custom_derivative(initial_approximation)
+        # division operation
+        approximation = f / f_prime
+        # subtraction property
+        initial_approximation -= approximation
+        iteration_counter += 1
+    return iteration_counter
+
 if __name__ == "__main__":
-    # print(absolute_error())
-    # print(relative_error())
-    x: float = 4/9
-    y: float = 1/3
-    z: float = 7/3
-    precise_val: float = (x - y) * z
-    #print(absolute_error(precise_val, .259))
-    #print(relative_error(precise_val, .259))
-    
-    # ====
-    # Quesion 5 answer
-    # ====
-    
-    ' section 1.3 '
-    ' minimum of terms needed to computer f(1) with error 10^-6'
-    ' pre reqs'
+    # Answer 1
+    print(solution_1)
+
+    # Answer 2
+    print(chopping_value)
+
+    # Answer 3
+    print(rounding_value)
+
+    # Answer 4
+    # Absolute Error:
+    print(abs_error)
+    # Relative Error:
+    print(str(f'{relative_err:.31f}'))
+
+    # Answer 5
     function_a: str = "(-1**k) * (x**k) / (k**3)"
     x: int = 1
     check1: bool = check_for_alternating(function_a)
     check2: bool = check_for_decreasing(function_a, x)
-    #print(check1 and check2)
+    # print(check1 and check2)
+    # Check 1 and Check 2 passed therefore we can check iterations
     if check1 and check2:
         n = np.cbrt(10**4) - 1
+        # rounds up n
         round_up_n = np.ceil(n)
-        print('use function a and round up n =', round_up_n)
-    #    use_minimum_term_function(function_a)
+        # use function a and round up n = num
+        print(int(round_up_n))
+
+    # Answer 6 (a) Bisection Method
+    left = -4
+    right = 7
+    function_string = "x**3 + (4*(x**2)) - 10"
+    bisection_method(left, right, function_string)
+
+    # Answer 6 (b) newton raphson method
+    initial_approximation: float = (7-(-4))/2
+    tolerance: float = .0001
+    sequence: str = "x**3 + (4*(x**2)) - 10"
+    iteration_counter = newton_raphson(initial_approximation, tolerance, sequence)
+    print(iteration_counter)
